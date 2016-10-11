@@ -1,3 +1,6 @@
+THIS IS AN UNFINISHED EXPERIMENT. YOU CANNOT USE IT FOR ANYTHING USEFULL.
+
+
 [![Build Status](https://travis-ci.org/mwjames/composer-packages.png?branch=master)](https://travis-ci.org/mwjames/composer-packages)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/mwjames/composer-packages/badges/quality-score.png?s=e683de3d75d834ef510a9fe21ebdc9bceb6c4b9c)](https://scrutinizer-ci.com/g/mwjames/composer-packages/)
 
