@@ -1,6 +1,6 @@
 <?php
 
-namespace ComposerPackages\Test;
+namespace ExtensionManager\Test;
 
 use ServiceRegistry\ServiceRegistry;
 
@@ -37,9 +37,6 @@ class ServicesContainerSetupIntegrationTest extends \PHPUnit_Framework_TestCase 
 			$this->assertTrue( is_callable( $signature ) );
 			$this->assertTrue( is_object( $instance->newObject( $service ) ) );
 		}
-
-		$this->assertArrayHasKey( 'FileReader', $instance->getAllServices() );
-		$this->assertInstanceOf( 'ComposerPackages\JsonFileReader', $instance->newObject( 'FileReader' ) );
 	}
 
 }

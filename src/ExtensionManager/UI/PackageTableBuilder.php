@@ -1,6 +1,10 @@
 <?php
 
-namespace ComposerPackages;
+namespace ExtensionManager\UI;
+
+use ExtensionManager\ComposerContentMapper;
+use ExtensionManager\HtmlFormatter;
+use i18n\MessageBuilder;
 
 /**
  * Class responsible for building a text output
@@ -10,7 +14,7 @@ namespace ComposerPackages;
  *
  * @author mwjames
  */
-class TextBuilder {
+class PackageTableBuilder {
 
 	/**
 	 * @since 0.1
@@ -38,14 +42,14 @@ class TextBuilder {
 	 * @since 0.1
 	 */
 	protected function getInfo() {
-		return $this->messageBuilder->getText( 'composerpackages-intro' );
+		return $this->messageBuilder->msgText( 'composerpackages-intro' );
 	}
 
 	/**
 	 * @since 0.1
 	 */
 	protected function getTableSection() {
-		return $this->htmlFormatter->createElement( 'h2', $this->messageBuilder->getText( 'composerpackages-table-header' ) );
+		return $this->htmlFormatter->createElement( 'h2', $this->messageBuilder->msgText( 'composerpackages-table-header' ) );
 	}
 
 	/**
@@ -63,35 +67,47 @@ class TextBuilder {
 	 * @since 0.1
 	 */
 	protected function createTableContent() {
-
 		$out = '';
 
 		$out .= $this->htmlFormatter->createElement( 'tr',
-			$this->htmlFormatter->createElement( 'th', $this->messageBuilder->getText( 'composerpackages-table-header-package' ) ) .
-			$this->htmlFormatter->createElement( 'th', $this->messageBuilder->getText( 'composerpackages-table-header-type' ) ) .
-			$this->htmlFormatter->createElement( 'th', $this->messageBuilder->getText( 'composerpackages-table-header-version' ) ) .
-			$this->htmlFormatter->createElement( 'th', $this->messageBuilder->getText( 'composerpackages-table-header-time' ) ) .
-			$this->htmlFormatter->createElement( 'th', $this->messageBuilder->getText( 'composerpackages-table-header-dependencies' ) )
+			$this->buildHeaderHtml( 'package' ) .
+			$this->buildHeaderHtml( 'type' ) .
+			$this->buildHeaderHtml( 'version' ) .
+			$this->buildHeaderHtml( 'time' ) .
+			$this->buildHeaderHtml( 'dependencies' )
 		);
 
 		foreach ( $this->mapper->getPackages() as $package ) {
 			$out .= $this->htmlFormatter->createElement( 'tr',
-				$this->htmlFormatter->createElement( 'td', $this->mapper->getElement( 'name', $package ) ) .
-				$this->htmlFormatter->createElement( 'td', $this->mapper->getElement( 'type', $package ) ) .
-				$this->htmlFormatter->createElement( 'td', $this->mapper->getElement( 'version', $package ) ) .
-				$this->htmlFormatter->createElement( 'td', $this->mapper->getElement( 'time', $package ) ) .
-				$this->htmlFormatter->createElement( 'td', $this->createDependencyList( $this->mapper->getElement( 'require', $package ) ) )
+				$this->buildCellHtml( $this->mapper->getElement( 'name', $package ) ) .
+				$this->buildCellHtml( $this->mapper->getElement( 'type', $package ) ) .
+				$this->buildCellHtml( $this->mapper->getElement( 'version', $package ) ) .
+				$this->buildCellHtml( $this->mapper->getElement( 'time', $package ) ) .
+				$this->buildCellHtml( $this->createDependencyList( $this->mapper->getElement( 'require', $package ) ) )
 			);
 		}
 
 		return $out;
 	}
 
+	private function buildHeaderHtml( $headerName ) {
+		return $this->htmlFormatter->createElement(
+			'th',
+			$this->messageBuilder->msgText( 'composerpackages-table-header-' . $headerName )
+		);
+	}
+
+	private function buildCellHtml( $htmlContents ) {
+		return $this->htmlFormatter->createElement(
+			'td',
+			$htmlContents
+		);
+	}
+
 	/**
 	 * @since 0.1
 	 */
 	protected function createDependencyList( $require ) {
-
 		$out = '';
 
 		if ( is_array( $require ) ) {

@@ -1,8 +1,8 @@
 <?php
 
-namespace ComposerPackages\Test;
+namespace ExtensionManager\Test;
 
-use ComposerPackages\Specials\ListComposerPackages;
+use ExtensionManager\Specials\ListComposerPackages;
 
 use SpecialPageFactory;
 use RequestContext;
@@ -10,7 +10,7 @@ use FauxRequest;
 use Language;
 
 /**
- * @covers \ComposerPackages\Specials\ListComposerPackages
+ * @covers ExtensionManager\MediaWiki\Specials\ListComposerPackages
  *
  * @group ComposerPackages
  *
@@ -21,17 +21,12 @@ use Language;
  */
 class ListComposerPackagesSpecialPageIntegrationTest extends \PHPUnit_Framework_TestCase {
 
-	/**
-	 * @return 0.1
-	 */
 	protected function setUp() {
-
 		if ( !defined( 'MEDIAWIKI' ) ) {
 			$this->markTestSkipped( 'MediaWiki is not available' );
 		}
 
 		parent::setUp();
-
 	}
 
 	/**

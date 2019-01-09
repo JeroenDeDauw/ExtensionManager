@@ -1,9 +1,8 @@
 <?php
 
-namespace ComposerPackages\Api;
+namespace ExtensionManager\MediaWiki\Api;
 
-use ComposerPackages\JsonFileReader;
-use ServiceRegistry\ServiceRegistry;
+use ExtensionManager\DIC\ServiceAccess;
 
 use ApiBase;
 
@@ -23,11 +22,7 @@ class ComposerPackages extends ApiBase {
 	 * @see ApiBase::execute
 	 */
 	public function execute() {
-
-		/**
-		 * @var JsonFileReader $reader
-		 */
-		$reader = ServiceRegistry::getInstance( 'composerpackages' )->newObject( 'FileReader' );
+		$reader = ServiceAccess::getInstance()->newObjectThatReadsAndParsesSomeSpecificJson();
 
 		if ( !$reader->canReadFile() ) {
 			$this->dieUsageMsg( array( 'illegal-filename' ) );
@@ -42,7 +37,6 @@ class ComposerPackages extends ApiBase {
 	 * @since 0.1
 	 */
 	protected function runFormatter( $packages ) {
-
 		if ( $this->getResult()->getIsRawMode() ) {
 			$this->dieUsageMsg( array( 'Selected format is not supported' ) );
 		};
@@ -101,7 +95,7 @@ class ComposerPackages extends ApiBase {
 	 * @return string
 	 */
 	public function getVersion() {
-		return __CLASS__ . '-' . COMPOSERPACKAGES_VERSION;
+		return __CLASS__ . '-' . EXTENSION_MANAGER_VERSION;
 	}
 
 }

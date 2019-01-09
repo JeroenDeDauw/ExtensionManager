@@ -1,6 +1,6 @@
 <?php
 
-namespace ComposerPackages;
+namespace ExtensionManager;
 
 use InvalidArgumentException;
 use UnexpectedValueException;
@@ -18,9 +18,9 @@ class JsonFileReader {
 	/**
 	 * @since 0.1
 	 *
-	 * @param FileLocator $sourceFile
+	 * @param FileInfo $sourceFile
 	 */
-	public function __construct( FileLocator $sourceFile ) {
+	public function __construct( FileInfo $sourceFile ) {
 		$this->sourceFile = $sourceFile;
 	}
 
@@ -31,15 +31,6 @@ class JsonFileReader {
 	 */
 	public function canReadFile() {
 		return $this->assertFileExists( $this->sourceFile->getFullPath() );
-	}
-
-	/**
-	 * @since 0.1
-	 *
-	 * @return string
-	 */
-	public function getFileName() {
-		return $this->sourceFile->getFileName();
 	}
 
 	/**
